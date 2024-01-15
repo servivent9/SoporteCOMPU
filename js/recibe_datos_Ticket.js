@@ -10,9 +10,17 @@
  usaremos el método get() para obtener cada uno de los valores
  */
  const logo = parametrosURL.get('logo');
- const logotipo = logo.replace('|', '&');
- console.log(logotipo);
- document.querySelector("#logo").src = (logotipo);
+ //const logotipo = logo.replace('|', '&');
+ //console.log(logotipo);
+ //document.querySelector("#logo").src = (logotipo);
+
+ if (logo == "1") {
+    document.querySelector("#logo").src = "logo1.png";
+} else if ( logo == "2" ) {
+    document.querySelector("#logo").src = "logo2.png";
+} else if ( logo == "3" ) {
+    document.querySelector("#logo").src = "logo3.png";
+}
 
  const tituloDoc = parametrosURL.get('numeroRegistro');
  document.querySelector("#tituloDoc").innerHTML = (tituloDoc);
@@ -28,15 +36,11 @@
  const precioProducto = parametrosURL.get('precioProducto');
 
  const subTotal = parametrosURL.get('subTotal');
- const otroDescuento = parametrosURL.get('otroDescuento');
- const impuesto = parametrosURL.get('impuesto');
  const descuento = parametrosURL.get('descuento');
  const totalPrecio = parametrosURL.get('totalPrecio');
 
  // formateamos a moneda Bs.
 const formatSubTotal = new Intl.NumberFormat('es-BO',{ style: 'currency', currency: 'BOB' }).format(subTotal);
-const formatOtroDescuento = new Intl.NumberFormat('es-BO',{ style: 'currency', currency: 'BOB' }).format(otroDescuento);
-const formatImpuesto = new Intl.NumberFormat('es-BO',{ style: 'currency', currency: 'BOB' }).format(impuesto);
 const formatDescuento = new Intl.NumberFormat('es-BO',{ style: 'currency', currency: 'BOB' }).format(descuento);
 const formatTotalPrecio = new Intl.NumberFormat('es-BO',{ style: 'currency', currency: 'BOB' }).format(totalPrecio);
 
@@ -84,10 +88,6 @@ precio.forEach((pU) => {
  hnombreCliente.innerHTML = (nombreCliente);
 
  document.querySelector("#subTotal").innerHTML = (formatSubTotal);
-
- document.querySelector("#otroDescuento").innerHTML = (formatOtroDescuento);
-
- document.querySelector("#impuesto").innerHTML = (formatImpuesto);
 
  document.querySelector("#descuento").innerHTML = (formatDescuento);
 
