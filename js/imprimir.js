@@ -120,6 +120,42 @@ function openWhatsApp() {
     }
 }
 
+function printTicketPDF() {
+    // Configura las opciones de html2canvas para una mayor resolución
+    var options = {
+        scale: 1.5, // Ajusta según sea necesario para mejorar la calidad
+        useCORS: true // Habilita el uso de CORS para imágenes externas
+    };
+
+    // Captura el contenido del div con las opciones especificadas
+    html2canvas(document.getElementById('ticket'), options).then(function (canvas) {
+        // Crea una nueva instancia de jsPDF
+        var pdf = new jsPDF();
+
+        // Calcula las dimensiones de la imagen en relación con la página
+        var imgWidth = pdf.internal.pageSize.getWidth();
+        var imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+        // Agrega la imagen al PDF y establece la posición en (0, 0)
+        pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, imgWidth, imgHeight);
+
+        // Aplica estilos específicos para la vista de impresión
+        var stylesForPrint = '<style type="text/css">@media print { img { width: 100%; } }</style>';
+        var printWindow = window.open('', '_blank');
+        var nombreNegocio = "Hola";
+        printWindow.document.write('<html><head><title>' + nombreNegocio + '</title>' + stylesForPrint + '</head><body>');
+        printWindow.document.write('<img src="' + canvas.toDataURL() + '"/>'); // Muestra la imagen en la vista de impresión
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+
+        // Espera 2 segundos antes de abrir el menú de impresión
+        setTimeout(function () {
+            printWindow.print();
+            printWindow.close(); // Cierra la ventana después de imprimir
+        }, 1000); // 2000 milisegundos = 2 segundos
+    });
+}
+
 
 
 
